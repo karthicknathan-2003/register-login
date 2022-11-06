@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
+    <title>Register Page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Registeration</h2>
+        </div>
+        <form class="form" id="form" action="register.php" method="post">
+            <div class="form1" id="form1">
+                <label>Name</label>
+                <input type="Text" placeholder="name" name="name1" id="name1">
+                <small>Error Message</small>
+            </div>
+            <div class="form1" id="form1">
+                <label>Email</label>
+                <input type="Text" placeholder="email" name="email" id="email">
+                <small>Error Message</small>
+            </div>
+            <div class="form1" id="form1">
+                <label>Password</label>
+                <input type="password" placeholder="password" name="pass" id="pass">
+                <small>Error Message</small>
+            </div>
+            <div class="form1" id="form1">
+                <label>Confirm Password</label>
+                <input type="password" placeholder="confirm password" name="cpass" id="cpass">
+                <small>Error Message</small>
+            </div>
+            <button>Sign Up</button>
+
+            
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("form");
+        const name1 = document.getElementById("name1");
+        const email = document.getElementById("email");
+        const password = document.getElementById("pass");
+        const cpassword = document.getElementById("cpass");        
+        form.addEventListener('submit', e => {
+            checkInput();
+            //let xhr=new XMLHttpRequest();
+            //xhr.open("post","insert.php",true);
+        });
+        function checkInput() {
+            const name1Value = name1.value.trim();
+            const emailValue = email.value.trim();
+            const passValue = password.value.trim();
+            const cpassValue = cpassword.value.trim();
+            if (name1Value === '') {
+                setError(name1, 'Name cannot be blank');
+            } else {
+                setSuccess(name1);
+            }
+            if (emailValue === '') {
+                setError(email, 'Email cannot be blank');
+            }
+            else if (!isEmail(emailValue)) {
+                setError(email, 'Not a valid email');
+            }
+            else {
+                setSuccess(email);
+            }
+            if (passValue === '') {
+                setError(password, 'Password cannot be blank');
+            } else {
+                setSuccess(password);
+            }
+            if (cpassValue === '') {
+                setError(cpassword, 'Password cannot be blank');
+            } else if (cpassValue !== passValue) {
+                setError(cpassword, 'Password not match');
+            }
+            else {
+                setSuccess(cpassword);
+            }
+        }
+        function isEmail(email) {
+            //return /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(email);
+            return /^([a-z0-9\+\-]+)(\.[a-z0-9\+\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/.test(email);
+        }
+        function setError(input, message) {
+            const form1 = input.parentElement;
+            const small = form1.querySelector('small');
+            form1.className = 'form1 error';
+            small.innerText = message;
+        }
+        function setSuccess(input) {
+            const form1 = input.parentElement;
+            form1.className = 'form1 success';
+        }
+        //$.ajax({
+            //url:"insert.php",
+            //method:"post",
+            //data:name1,email,password,cpassword,
+        //})
+    </script>
+</body>
+</html>
